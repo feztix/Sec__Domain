@@ -1,0 +1,14 @@
+#!/bin/bash
+# loop by line
+IFS=$'\n'
+
+# собирает каждый запущенный процесс в системе
+old_process=$(ps -eo command)
+
+while true; do
+        # собирает каждый новый запущенный проесс в системе
+        new_process=$(ps -eo command)
+        diff <(echo "$old_process") <(echo "$new_process") | grep [\<\>]
+        sleep 1
+        old_process=$new_process
+done
